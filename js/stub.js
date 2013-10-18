@@ -44,7 +44,7 @@ $(function() {
 
 
      var tick = 0;
-     var maxTicks = 2;
+     var maxTicks = 20;
      var paused = true;
 
      setInterval(function() {
