@@ -1,0 +1,62 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,800,700,300);
+body, html {
+  background-color: black;
+  padding : 0;
+  margin : 0;
+  overflow: hidden;
+}
+
+#container {
+  margin: 0;
+  padding: 0;
+
+  position: relative;
+}
+
+.slide-image {
+  display: none;
+}
+
+#counter {
+  width : 100px;
+  height : 100px;
+  border-radius: 100px;
+  line-height: 100px;
+
+  text-align: center;
+  font-size: 3em;
+  font-family: "Open Sans";
+  font-weight: 800;
+  color : white;
+  background-color: #ff006c;
+  position: absolute;
+  z-index: 3;
+  left :10px;
+  top : 10px;
+}
+
+#paused {
+  text-align: center;
+  font-size: 1.5em;
+  font-family: "Open Sans";
+  font-weight: 800;
+  color : white;
+  position: absolute;
+  z-index: 3;
+  width: 100px;
+  text-align: center;
+  left :10px;
+  top : 120px;
+}
+
+.slide {
+  background:  no-repeat center center fixed; 
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+
+  position: absolute;
+  height:  100%;
+  width : 100%;
+}
