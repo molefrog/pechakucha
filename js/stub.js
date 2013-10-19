@@ -1,16 +1,29 @@
-$(function() {
+/* 
+ * The code is written using GovnoCode coding standart.
+ * Please take it into account when contributing.
+ * The code is distributed under IDACWSEUI license 
+ * (I Don't Actually Care, Will Someone Ever Use It?)
+ */
 
+$(function() {
+    // Makes containter fullscreened (TODO: make it with CSS!)
     var container = $("#container");
     var resizeHandler = function() {
         container.height( $(window).height() );
         container.width( $(window).width() );
     };
 
-     $(window).resize(resizeHandler);
-     $(window).resize();
+    $(window).resize(resizeHandler);
+    $(window).resize();
+});
 
-     window.slides = [];
+$(window).on("load", function() {
+    var container = $("#container");
 
+    $("#loading").hide(0);
+    var fadeDuration = 250;
+
+    slides = [];
      $(".slide-image").each(function(i, elem) {
         var slideElement = $("<div>").addClass("slide");
 
@@ -26,52 +39,72 @@ $(function() {
      });
 
      var current = 0;
-     slides[current].fadeIn(500);
+     slides[current].fadeIn(fadeDuration);
 
-     function changeSlide() {
 
-        if(current >= slides.length - 1) {
-            paused = true;
+     // The function changes the slides to the next one
+     function nextSlide() {
+        if(current === slides.length - 1) 
             return;
-        }
 
-        slides[current].fadeOut(500);
+        slides[current].fadeOut(fadeDuration);
         current = (current + 1) % slides.length;
-
-
-        slides[current].fadeIn(500);
+        slides[current].fadeIn(fadeDuration);
      }
 
 
+     // The function changes the slides to the previous one
+     function previousSlide() {
+        if(current === 0) 
+            return;
+
+        slides[current].fadeOut(fadeDuration);
+        current = (current - 1) % slides.length;
+        slides[current].fadeIn(fadeDuration);
+     }
+
      var tick = 0;
      var maxTicks = 20;
-     var paused = true;
+     var paused = false;
 
-     setInterval(function() {
-        if(paused) return;
-        ++tick;
+     function tickHandler() {
+        if(paused) {
+            $("#counter").text("P");
+        } else {
+            ++tick;
 
-        if(tick > maxTicks) {
-            changeSlide();
-            tick = 1;
+            if(tick > maxTicks) {
+                nextSlide();
+                tick = 1;
+            }
+            $("#counter").text(tick); 
         }
-        $("#counter").text(tick);
-        console.log(tick);
-     }, 1000);
+        setTimeout(tickHandler, 1000);
+     };
+
+     tickHandler();
+
+
+     var KEY_RIGHT = 39;
+     var KEY_LEFT  = 37;
+     var KEY_SPACE = 32;
 
      $(window).keydown(function(e) {
-         if(e.keyCode === 32) {
-            console.log("Space");
-            paused = !paused;
+        switch(e.keyCode) {
+            case KEY_LEFT:
+                tick = 0;
+                previousSlide();
+            break;
 
-            if(paused) {
-                $("#paused").fadeIn(300);
-            } else {
-                $("#paused").fadeOut(300);
-            }
-         }
+            case KEY_RIGHT:
+                tick = 0;
+                nextSlide();
+            break;
+
+            case KEY_SPACE:
+                paused = !paused;
+                console.log(paused);
+            break;
+        }
      });
-
-
-
 });
